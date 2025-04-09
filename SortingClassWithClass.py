@@ -16,6 +16,7 @@
 8. 프로그램 종료
 """
 # 학생 클래스 (이름, 성적 이런 거 저장할려고 만듬)
+# 학생 클래스 (이름, 성적 이런 거 저장할려고 만듬)
 class Student:
     def __init__(self, hakbun, name, eng, c, py):
         self.hakbun = hakbun
@@ -58,7 +59,7 @@ class StudentManager:
         py = int(input("파이썬 점수: "))
         s = Student(hakbun, name, eng, c, py)
         self.students.append(s)
-        print("입력 완료!\n")
+        print("입력 완료 \n")
 
     def print_all(self):
         print("학번\t이름\t영어\tC\t파이썬\t총점\t평균\t학점\t등수")
@@ -69,7 +70,7 @@ class StudentManager:
         sorted_list = sorted(self.students, key=lambda x: x.total, reverse=True)
         for idx, stu in enumerate(sorted_list):
             stu.rank = idx + 1  # 등수는 1등부터 시작
-        print("등수 계산됨!\n")
+        print("등수 계산됨 \n")
 
     def delete_student(self):
         target = input("삭제할 학생 학번 입력: ")
@@ -84,11 +85,40 @@ class StudentManager:
         key = input("학번이나 이름으로 검색: ")
         for s in self.students:
             if s.hakbun == key or s.name == key:
-                print("찾음 ->")
+                print("찾음")
                 print("학번\t이름\t영어\tC\t파이썬\t총점\t평균\t학점\t등수")
                 print(s)
                 return
-        요: ")
+        print("못찾음")
+
+    def sort_total(self):
+        self.students.sort(key=lambda x: x.total, reverse=True)
+        self.calc_rank()
+        self.print_all()
+
+    def count_over_80(self):
+        cnt = 0
+        for s in self.students:
+            if s.avg >= 80:
+                cnt += 1
+        print("평균 80점 넘는 사람:", cnt, "명")
+
+
+# 메뉴 선택하는 메인 함수임 (while문으로 반복됨)
+def main():
+    manager = StudentManager()
+    while True:
+        print("\n====== 학생 성적 관리 ======")
+        print("1. 성적 입력")
+        print("2. 전체 출력")
+        print("3. 등수 계산")
+        print("4. 성적 삭제")
+        print("5. 학생 검색")
+        print("6. 총점 정렬")
+        print("7. 평균 80점 넘는 사람 몇명인지 보기")
+        print("8. 종료")
+
+        choice = input("번호 고르셈: ")
         if choice == '1':
             manager.input_score()
         elif choice == '2':
@@ -104,7 +134,7 @@ class StudentManager:
         elif choice == '7':
             manager.count_over_80()
         elif choice == '8':
-            print("종료합니다")
+            print("종료")
             break
         else:
             print("잘못 누름")
